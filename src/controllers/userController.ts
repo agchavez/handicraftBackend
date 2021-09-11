@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import { validationResult } from 'express-validator';
+import { generateJWT } from '../helpers/jwt.helper';
 import User from '../models/userModel';
 
 export const userGet = async (req:Request, res:Response)=>{
@@ -17,9 +18,11 @@ export const registerUser = async (req:Request, res:Response)=>{
     })
     try {
         await user.save();
+        const jwt = await generateJWT(user.id);
         res.status(200).json({
             msj: 'Usuario registrado',
-            user
+            user,
+            "token":jwt
         })
         
     } catch (error) {

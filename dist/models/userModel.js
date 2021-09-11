@@ -8,15 +8,18 @@ const { Schema, model } = mongoose_1.default;
 const userSchema = new Schema({
     firtName: {
         type: String,
+        lowercase: true,
         required: [true, 'El nombre del usuario es obligatorio']
     },
     email: {
         unique: true,
+        lowercase: true,
         type: String,
         required: [true, 'El correo electronico es obligatorio']
     },
     lastName: {
         type: String,
+        lowercase: true,
         required: [true, 'El nombre electronico es obligatorio']
     },
     password: {

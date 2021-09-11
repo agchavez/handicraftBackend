@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = exports.userGet = void 0;
+const jwt_helper_1 = require("../helpers/jwt.helper");
 const userModel_1 = __importDefault(require("../models/userModel"));
 const userGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(202).json({
@@ -28,9 +29,11 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
     try {
         yield user.save();
+        const jwt = yield (0, jwt_helper_1.generateJWT)(user.id);
         res.status(200).json({
             msj: 'Usuario registrado',
-            user
+            user,
+            "token": jwt
         });
     }
     catch (error) {

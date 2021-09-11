@@ -2,14 +2,15 @@ import  express, { Application } from "express";
 import cors from "cors";
 
 import userRoute from "../routes/userRoute";
+import uthRoute from "../routes/auth.route";
 import dbConnection from "../db/dbConfig";
 
 export default class Server{
-    private app:Application;
+    public app:Application;
     private port:string;
     private apiPath = {
+        auth: "/api/auth",
         user: "/api/user",
-        auth:"/api/auth"
     }
 
     constructor(){
@@ -24,7 +25,6 @@ export default class Server{
     }
 
     async dbConnection(){
-        console.log("here");
         
         await dbConnection();
 
@@ -48,6 +48,8 @@ export default class Server{
 
     routes(){
          
-        this.app.use(this.apiPath.user, userRoute)
+        this.app.use(this.apiPath.auth, uthRoute);
+        this.app.use(this.apiPath.user, userRoute);
+        
     }
 }

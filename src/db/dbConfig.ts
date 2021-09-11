@@ -4,8 +4,7 @@ const dbConnection = async()=>{
     try {
         
         const dbLink: string = process.env.DB_CNN!;
-        await mongose.connect( dbLink)
-        console.log('Base de datos online');
+        await mongose.connect( dbLink);
         
         
     } catch (error) {

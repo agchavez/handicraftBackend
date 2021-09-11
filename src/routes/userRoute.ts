@@ -1,6 +1,6 @@
 import { Router,  } from "express";
 import  { check } from 'express-validator';
-import {Request, Response} from 'express';
+
 import validatorCamp from "../middlewares/validatorCamp";
 import { registerUser } from '../controllers/userController';
 import { emailExist } from '../helpers/dbValidator';

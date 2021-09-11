@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = exports.userGet = void 0;
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jwt_helper_1 = require("../helpers/jwt.helper");
 const userModel_1 = __importDefault(require("../models/userModel"));
 const userGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,9 +24,11 @@ const userGet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.userGet = userGet;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password, firtName, lastName, phone } = req.body;
-    //validar si el correo ya existe
+    //Encriptar contrseña
+    const salt = bcryptjs_1.default.genSaltSync();
+    const passwordEncrip = bcryptjs_1.default.hashSync(password.toString(), salt);
     const user = new userModel_1.default({
-        email, firtName, lastName, password, phone
+        email, firtName, lastName, phone, password: passwordEncrip
     });
     try {
         yield user.save();

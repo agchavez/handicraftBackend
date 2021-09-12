@@ -1,6 +1,8 @@
 
 import mongoose from 'mongoose';
+import { UserInterface } from '../interface/user.interface';
 const { Schema, model } = mongoose;
+
 
 const userSchema = new Schema({
     firtName: {
@@ -23,6 +25,10 @@ const userSchema = new Schema({
         type:String,
         required:[true, 'La contraseña es obligatoria']
     },
+    status:{
+        type:Boolean,
+        default:true
+    },
     phone:{
         type:Number,
         min: [8, 'Numero de telefono no valido'],
@@ -30,4 +36,4 @@ const userSchema = new Schema({
     }
 });
 
-export default model('User', userSchema);
+export default model<UserInterface>('User', userSchema);

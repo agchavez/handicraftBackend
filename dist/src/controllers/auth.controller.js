@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginAuth = void 0;
-const userModel_1 = __importDefault(require("../models/userModel"));
+const user_model_1 = __importDefault(require("../models/user.model"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jwt_helper_1 = require("../helpers/jwt.helper");
 const loginAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
-        const user = yield userModel_1.default.findOne({ email });
+        const user = yield user_model_1.default.findOne({ email });
         if (!user) {
             return res.status(400).json({
                 msj: `El correo ${email}, no esta registrado`

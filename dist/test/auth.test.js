@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const serverModel_1 = __importDefault(require("../src/models/serverModel"));
-const userModel_1 = __importDefault(require("../src/models/userModel"));
-const server = new serverModel_1.default();
+const server_model_1 = __importDefault(require("../src/models/server.model"));
+const user_model_1 = __importDefault(require("../src/models/user.model"));
+const server = new server_model_1.default();
 describe('Testing user-auth', () => {
     const app = (0, supertest_1.default)(server.app);
     test('Create new user ', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield userModel_1.default.deleteMany({});
+        yield user_model_1.default.deleteMany({});
         yield app.post('/api/user/post')
             .send({
             email: "agchavez@unah.hn",

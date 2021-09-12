@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 
-import Server from '../src/models/serverModel';
-import User from '../src/models/userModel';
+import Server from '../src/models/server.model';
+import User from '../src/models/user.model';
 
 const server = new Server();
 

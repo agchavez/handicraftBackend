@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const userRoute_1 = __importDefault(require("../routes/userRoute"));
-const auth_route_1 = __importDefault(require("../routes/auth.route"));
+const user_routes_1 = __importDefault(require("../routes/user.routes"));
+const auth_routes_1 = __importDefault(require("../routes/auth.routes"));
 const dbConfig_1 = __importDefault(require("../db/dbConfig"));
 class Server {
     constructor() {
@@ -46,8 +46,8 @@ class Server {
         });
     }
     routes() {
-        this.app.use(this.apiPath.auth, auth_route_1.default);
-        this.app.use(this.apiPath.user, userRoute_1.default);
+        this.app.use(this.apiPath.auth, auth_routes_1.default);
+        this.app.use(this.apiPath.user, user_routes_1.default);
     }
 }
 exports.default = Server;

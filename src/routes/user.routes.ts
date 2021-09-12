@@ -2,7 +2,7 @@ import { Router,  } from "express";
 import  { check } from 'express-validator';
 
 import validatorCamp from "../middlewares/validatorCamp";
-import { getAllUser, registerUser } from '../controllers/user.controller';
+import { getAllUser, getUserByID, registerUser } from '../controllers/user.controller';
 import { emailExist } from '../helpers/dbValidator';
 import { validatorJwt } from "../helpers/jwt.helper";
 
@@ -18,8 +18,20 @@ route.post('/new',[
     validatorCamp
 ], registerUser);
 
-route.get('/all',[
+route.get('/',[
     validatorJwt
 ], getAllUser);
+
+route.delete('/delete/:id',[
+    check('id', 'El id es obligatorio').notEmpty(),
+    validatorJwt,
+    validatorCamp
+], ()=>{});
+
+route.get('/:id',
+    [check('id', 'El id es obligatorio').notEmpty(),
+    validatorJwt,
+    validatorCamp], getUserByID
+    );
 
 export default route;

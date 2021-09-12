@@ -28,7 +28,7 @@ import { UserInterface } from '../interface/user.interface';
         });   
     } catch (error) {
         res.status(500).json({
-            msg:'Error al guardar el usuario',
+            msg:'server error',
             error
         });
     }
@@ -37,26 +37,54 @@ const getAllUser = async(req:Request, res:Response)=>{
     
     const {limit = 1, from = 0} = req.query;
     const query = {status:true, limit}
-    
-    
-    
-    const [users, total] = await Promise.all([
-                                            User.find(query)
-                                            .skip( Number( from ) )
-                                            .limit(Number( limit )),
-                                            User.countDocuments(query)]);
+    try {
+        const [users, total] = await Promise.all
+                                ([ User.find(query)
+                                        .skip( Number( from ) )
+                                        .limit(Number( limit )),
+                                    User.countDocuments(query)]);
     res.status(200).json({
         users,
         total,
         ok:true
-    })
+    });
+    } catch (error) {
+        res.status(500).json({
+            msg:'server error',
+            error
+        });
+        
+    }
+    
 
 }
 
-
+const getUserByID = async(req:Request, res:Response) =>{
+    const {id} = req.params;
+    try {
+        
+        try {
+            const user = await User.findById(id);
+            res.status(200).json({
+                user,
+                ok:true
+            });
+        } catch (error) {
+            return res.status(400).json({
+                msj:"El usuario no existe"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            msg:'server error',
+            error
+        });   
+    }
+}
 export {
     registerUser,
     userGet,
-    getAllUser
+    getAllUser,
+    getUserByID
 
 }

@@ -29,6 +29,4 @@ export const loginAuth = async(req:Request, res:Response)=> {
             error
         })
     }
-    
-
 }

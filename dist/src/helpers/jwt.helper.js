@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateJWT = void 0;
+exports.validatorJwt = exports.generateJWT = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const user_model_1 = __importDefault(require("../models/user.model"));
 const generateJWT = (uid) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         //Los datos que va contener el JWT
@@ -32,4 +33,36 @@ const generateJWT = (uid) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.generateJWT = generateJWT;
+const validatorJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.header('token');
+    if (!token) {
+        return res.status(400).json({
+            msj: "No hay token en la peticion"
+        });
+    }
+    try {
+        const temp = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
+        req.body.uid = temp['uid'];
+        const user = yield user_model_1.default.findById(temp['uid']);
+        if (!user) {
+            res.status(401).json({
+                msg: "Token no valido - El usuario no existe"
+            });
+        }
+        if (!(user === null || user === void 0 ? void 0 : user.status)) {
+            return res.status(401).json({
+                msg: "Token no valido - Usuario eliminado"
+            });
+        }
+        req.body.user = user;
+        next();
+    }
+    catch (error) {
+        res.status(500).json({
+            msg: "Error del servidor",
+            error
+        });
+    }
+});
+exports.validatorJwt = validatorJwt;
 //# sourceMappingURL=jwt.helper.js.map

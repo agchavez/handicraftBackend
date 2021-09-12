@@ -13,6 +13,6 @@ coverage
 
 # API keys and secrets
 .env
-
+dist/   
 
 node_modules

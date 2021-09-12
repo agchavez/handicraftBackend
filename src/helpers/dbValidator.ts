@@ -1,4 +1,4 @@
-import User from "../models/userModel";
+import User from "../models/user.model";
 
 
 export const emailExist = async( email:string ) => {

@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailExist = void 0;
-const userModel_1 = __importDefault(require("../models/userModel"));
+const user_model_1 = __importDefault(require("../models/user.model"));
 const emailExist = (email) => __awaiter(void 0, void 0, void 0, function* () {
     // Verificar si el correo existe
-    const existeEmail = yield userModel_1.default.findOne({ email });
+    const existeEmail = yield user_model_1.default.findOne({ email });
     if (existeEmail) {
         throw new Error(`El correo: ${email}, ya está registrado`);
     }

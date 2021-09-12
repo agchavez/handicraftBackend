@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
+import User from '../models/user.model';
 
 export const generateJWT = async(uid:any)=>{
     return new Promise((resolve, reject) => {
@@ -17,4 +19,40 @@ export const generateJWT = async(uid:any)=>{
         })
 
     })
+}
+
+
+const validatorJwt = async(req:Request, res:Response, next:any)=>{
+    const token = req.header('token');
+    if(!token){
+        return res.status(400).json({
+            msj:"No hay token en la peticion"
+        });
+    }
+    try {
+        const temp:any = jwt.verify(token, process.env.JWT_KEY!);
+        req.body.uid = temp['uid'];
+        
+        const user = await User.findById(temp['uid'])
+        if(!user){
+            res.status(401).json({
+                msg:"Token no valido - El usuario no existe"
+            })
+        }
+        if(!user?.status){
+            return res.status(401).json({
+                msg:"Token no valido - Usuario eliminado"
+            })
+        }
+        req.body.user = user;
+        next();     
+    } catch (error) {
+        res.status(500).json({
+            msg:"Error del servidor",
+            error
+        })   
+    }
+}
+export {
+    validatorJwt
 }

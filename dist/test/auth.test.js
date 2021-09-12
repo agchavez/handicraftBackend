@@ -13,16 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const serverModel_1 = __importDefault(require("../src/models/serverModel"));
-const userModel_1 = __importDefault(require("../src/models/userModel"));
-const server = new serverModel_1.default();
+const server_model_1 = __importDefault(require("../src/models/server.model"));
+const user_model_1 = __importDefault(require("../src/models/user.model"));
+const server = new server_model_1.default();
+var token;
 describe('Testing user-auth', () => {
     const app = (0, supertest_1.default)(server.app);
     test('Create new user ', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield userModel_1.default.deleteMany({});
-        yield app.post('/api/user/post')
+        yield user_model_1.default.deleteOne({ email: "gchavez@unah.hn" });
+        yield app.post('/api/user/new')
             .send({
-            email: "agchavez@unah.hn",
+            email: "gchavez@unah.hn",
             firtName: "Angel Gabriel",
             lastName: "Chavez Vigil",
             password: "agchavez",
@@ -31,6 +32,30 @@ describe('Testing user-auth', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
+    }));
+    test('Login user', (done) => {
+        app.get('/api/auth/login')
+            .send({
+            email: "agchavez@unah.hn",
+            password: "agchavez",
+        })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+            token = res.body.token;
+            done(); // Or something
+        });
+    });
+    test('Login user fail', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield app.get('/api/auth/login')
+            .send({
+            email: "agchavez@unah.hn",
+            password: "aq223fq",
+        })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400);
     }));
 });
 //# sourceMappingURL=auth.test.js.map

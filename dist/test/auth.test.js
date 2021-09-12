@@ -20,10 +20,10 @@ var token;
 describe('Testing user-auth', () => {
     const app = (0, supertest_1.default)(server.app);
     test('Create new user ', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield user_model_1.default.deleteMany({});
+        yield user_model_1.default.deleteOne({ email: "gchavez@unah.hn" });
         yield app.post('/api/user/new')
             .send({
-            email: "agchavez@unah.hn",
+            email: "gchavez@unah.hn",
             firtName: "Angel Gabriel",
             lastName: "Chavez Vigil",
             password: "agchavez",
@@ -56,17 +56,6 @@ describe('Testing user-auth', () => {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400);
-    }));
-});
-describe('User information', () => {
-    const app = (0, supertest_1.default)(server.app);
-    test('Get all user ', () => __awaiter(void 0, void 0, void 0, function* () {
-        const commonHeaders = { token, 'limit': 10 };
-        yield app.get('/api/user/all')
-            .set(commonHeaders)
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200);
     }));
 });
 //# sourceMappingURL=auth.test.js.map

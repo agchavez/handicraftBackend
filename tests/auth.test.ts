@@ -9,7 +9,7 @@ describe('Testing user-auth', () => {
     const app = supertest(server.app);
 
     test('Create new user ', async () => {
-        await User.deleteMany({});
+        await User.deleteOne({email    :"agchavez@unah.hn"});
         await app.post('/api/user/new')
             .send({
                 email    :"agchavez@unah.hn",
@@ -49,18 +49,6 @@ describe('Testing user-auth', () => {
                 
    });
 });
-
-describe('User information', () => {
-    const app = supertest(server.app);
-    test('Get all user ', async() => {
-        const commonHeaders = { token, 'limit':10 };
-        await app.get('/api/user/all')
-        .set(commonHeaders)
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200)   
-    });
-})
 
 
 

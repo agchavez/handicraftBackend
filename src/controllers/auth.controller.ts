@@ -21,6 +21,7 @@ export const loginAuth = async(req:Request, res:Response)=> {
         const token = await generateJWT(user.id);
         res.status(200).json({
             msj: "ok",
+            user,
             token
         })        
     } catch (error) {

@@ -34,6 +34,7 @@ const loginAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const token = yield (0, jwt_helper_1.generateJWT)(user.id);
         res.status(200).json({
             msj: "ok",
+            user,
             token
         });
     }

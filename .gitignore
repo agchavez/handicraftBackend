@@ -13,8 +13,6 @@ coverage
 
 # API keys and secrets
 .env
-
-# Ignore built ts files
-dist/**/*
+dist/   
 
 node_modules

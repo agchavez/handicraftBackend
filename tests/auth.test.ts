@@ -9,10 +9,10 @@ describe('Testing user-auth', () => {
     const app = supertest(server.app);
 
     test('Create new user ', async () => {
-        await User.deleteOne({email    :"agchavez@unah.hn"});
+        await User.deleteOne({email    :"gchavez@unah.hn"});
         await app.post('/api/user/new')
             .send({
-                email    :"agchavez@unah.hn",
+                email    :"gchavez@unah.hn",
                 firtName :"Angel Gabriel",
                 lastName :"Chavez Vigil",
                 password :"agchavez",

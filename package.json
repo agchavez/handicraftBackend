@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/src/app.js",
     "start:dev": "nodemon dist/src/app.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "keywords": [],
   "author": "",

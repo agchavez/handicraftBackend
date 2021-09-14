@@ -9,4 +9,6 @@ import { validatorJwt } from "../helpers/jwt.helper";
 
 const route = Router();
 
-route.get();
+route.get('', ()=>{});
+
+route.post('',()=>{});
